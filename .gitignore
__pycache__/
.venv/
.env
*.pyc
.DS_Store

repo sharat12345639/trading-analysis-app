@@ -1,0 +1,69 @@
+const renderSummary = (data) => {
+  const summary = data.summary || {};
+  const root = document.getElementById('summary');
+  const cards = [
+    { label: 'Total symbols', value: summary.total_symbols ?? 0 },
+    { label: 'Low IV', value: summary.low_iv_count ?? 0 },
+    { label: 'Gamma blast', value: summary.gamma_blast_count ?? 0 },
+    { label: 'Avg. score', value: `${summary.avg_score ?? 0}` },
+    { label: 'Buy signals', value: summary.buy_count ?? 0 },
+    { label: 'Top pick', value: summary.top_pick?.symbol ?? 'N/A' },
+  ];
+
+  root.innerHTML = cards.map(card => `
+    <div class="summary-card">
+      <div class="label">${card.label}</div>
+      <div class="value">${card.value}</div>
+    </div>
+  `).join('');
+};
+
+const renderList = (id, items, emptyText = 'No matches') => {
+  const el = document.getElementById(id);
+  if (!items || items.length === 0) {
+    el.innerHTML = `<div class="chip">${emptyText}</div>`;
+    return;
+  }
+
+  el.innerHTML = items.map(item => `
+    <div class="chip">
+      <span>${item.symbol}</span>
+      <strong>${item.score}</strong>
+    </div>
+  `).join('');
+};
+
+const signalClass = (signal) => {
+  const normalized = signal.toLowerCase();
+  if (normalized === 'buy') return 'signal-buy';
+  if (normalized === 'watch') return 'signal-watch';
+  return 'signal-sell';
+};
+
+const renderWatchlist = (signals) => {
+  const body = document.getElementById('watchlist-body');
+  body.innerHTML = (signals || []).map(signal => `
+    <tr>
+      <td>${signal.symbol}</td>
+      <td>${signal.asset_type}</td>
+      <td>$${Number(signal.price).toFixed(2)}</td>
+      <td>${signal.iv_percentile}</td>
+      <td>${signal.mtf_alignment}</td>
+      <td>${signal.event_label}</td>
+      <td><span class="signal-badge ${signalClass(signal.signal)}">${signal.signal}</span></td>
+      <td>${signal.score}</td>
+    </tr>
+  `).join('');
+};
+
+const loadDashboard = async () => {
+  const response = await fetch('/api/overview');
+  const data = await response.json();
+
+  renderSummary(data);
+  renderList('low-iv-list', data.low_iv, 'No low-IV setups');
+  renderList('gamma-list', data.gamma_blast, 'No gamma-blast setups');
+  renderWatchlist(data.signals);
+};
+
+loadDashboard();

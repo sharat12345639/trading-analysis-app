@@ -1,3 +1,103 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Trading Analysis Dashboard</title><link rel="stylesheet" href="/static/styles.css"></head>
-<body><main class="app-shell"><header class="topbar"><div><p class="eyebrow">Trade intelligence</p><h1>Multi-signal Trading Dashboard</h1></div><div class="status-pill">Analytical prototype</div></header><section id="summary" class="summary-grid"></section><section class="panel-grid"><div class="panel"><h2>Low IV opportunities</h2><div id="low-iv-list" class="chip-list"></div></div><div class="panel"><h2>Gamma blast signals</h2><div id="gamma-list" class="chip-list"></div></div></section><section class="panel"><h2>Signal watchlist</h2><div class="table-wrap"><table><thead><tr><th>Symbol</th><th>Type</th><th>Price</th><th>IV</th><th>MTF</th><th>Event</th><th>Signal</th><th>Score</th></tr></thead><tbody id="watchlist-body"></tbody></table></div></section></main><script src="/static/app.js"></script></body></html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Trading Analysis App</title>
+    <meta
+      name="description"
+      content="Multi-signal trading dashboard for price action, fundamentals, IV compression, gamma blasts, and event-driven opportunities."
+    />
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="topbar">
+        <div class="brand-wrap">
+          <div class="brand-mark">TA</div>
+          <div>
+            <p class="eyebrow">Trade intelligence</p>
+            <h1>Trading Analysis App</h1>
+          </div>
+        </div>
+        <button id="refreshButton" class="refresh-btn" type="button">Refresh data</button>
+      </header>
+
+      <section class="hero panel">
+        <div class="hero-copy">
+          <p class="eyebrow secondary">Market scan</p>
+          <h2>Actionable signals across trend, volatility, and catalysts.</h2>
+          <p>
+            A lightweight analytical dashboard built to evaluate multi-timeframe trend alignment,
+            fundamental quality, event momentum, implied volatility conditions, and gamma-blast setups.
+          </p>
+          <div class="hero-actions">
+            <a href="#watchlist" class="primary-btn">View watchlist</a>
+            <a href="#scanner" class="secondary-btn">Open scanner</a>
+          </div>
+        </div>
+
+        <div class="pulse-card">
+          <div class="pulse-label">Market pulse</div>
+          <div id="marketPulse" class="pulse-value">Loading…</div>
+          <div class="pulse-grid">
+            <div>
+              <span class="mini-label">Bias</span>
+              <strong id="biasValue">—</strong>
+            </div>
+            <div>
+              <span class="mini-label">Top pick</span>
+              <strong id="topPickValue">—</strong>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="summary" class="summary-grid" aria-live="polite"></section>
+
+      <div class="panel-grid">
+        <section id="scanner" class="panel">
+          <div class="panel-header">
+            <h2>Low-IV opportunities</h2>
+            <span class="panel-tag">Scanner</span>
+          </div>
+          <div id="low-iv-list" class="chip-list" aria-live="polite"></div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-header">
+            <h2>Gamma blast watch</h2>
+            <span class="panel-tag">Volatility</span>
+          </div>
+          <div id="gamma-list" class="chip-list" aria-live="polite"></div>
+        </section>
+      </div>
+
+      <section id="watchlist" class="panel full-width">
+        <div class="panel-header">
+          <h2>Watchlist</h2>
+          <span class="panel-tag">Signal model</span>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Symbol</th>
+                <th>Asset</th>
+                <th>Price</th>
+                <th>Daily</th>
+                <th>Trend</th>
+                <th>Signal</th>
+                <th>Score</th>
+              </tr>
+            </thead>
+            <tbody id="watchlist-body"></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <script src="/static/app.js"></script>
+  </body>
+</html>

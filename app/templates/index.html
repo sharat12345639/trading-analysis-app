@@ -6,7 +6,7 @@
     <title>Trading Analysis App</title>
     <meta
       name="description"
-      content="Multi-signal trading dashboard for price action, fundamentals, IV compression, gamma blasts, and event-driven opportunities."
+      content="Multi-signal trading dashboard for trend, volatility, fundamentals, and event-driven opportunities."
     />
     <link rel="stylesheet" href="/static/styles.css" />
   </head>
@@ -20,7 +20,14 @@
             <h1>Trading Analysis App</h1>
           </div>
         </div>
-        <button id="refreshButton" class="refresh-btn" type="button">Refresh data</button>
+
+        <div class="topbar-actions">
+          <div class="mini-status">
+            <span class="live-dot"></span>
+            Market live
+          </div>
+          <button id="refreshButton" class="refresh-btn" type="button">Refresh data</button>
+        </div>
       </header>
 
       <section class="hero panel">
@@ -53,6 +60,8 @@
         </div>
       </section>
 
+      <section id="strategyGrid" class="strategy-grid" aria-label="Signal strategy metrics"></section>
+
       <section id="summary" class="summary-grid" aria-live="polite"></section>
 
       <div class="panel-grid">
@@ -72,6 +81,24 @@
           <div id="gamma-list" class="chip-list" aria-live="polite"></div>
         </section>
       </div>
+
+      <section class="analytics-grid">
+        <div class="panel">
+          <div class="panel-header">
+            <h2>Signal engine</h2>
+            <span class="panel-tag">Model</span>
+          </div>
+          <div id="signalBreakdown" class="signal-breakdown"></div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header">
+            <h2>Opportunity ladder</h2>
+            <span class="panel-tag">Ranks</span>
+          </div>
+          <div id="opportunityLadder" class="ladder"></div>
+        </div>
+      </section>
 
       <section id="watchlist" class="panel full-width">
         <div class="panel-header">

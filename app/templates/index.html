@@ -3,127 +3,230 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Trading Analysis App</title>
+    <title>Trading Analysis App — Advanced Analytics Platform</title>
     <meta
       name="description"
-      content="Multi-signal trading dashboard for trend, volatility, fundamentals, and event-driven opportunities."
+      content="Professional trading analytics platform for institutional-grade price action, volatility, and catalyst analysis."
     />
     <link rel="stylesheet" href="/static/styles.css" />
   </head>
   <body>
-    <main class="app-shell">
-      <header class="topbar">
-        <div class="brand-wrap">
-          <div class="brand-mark">TA</div>
-          <div>
-            <p class="eyebrow">Trade intelligence</p>
-            <h1>Trading Analysis App</h1>
+    <div class="platform-wrapper">
+      <aside class="sidebar">
+        <div class="sidebar-logo">
+          <div class="logo-mark">TA</div>
+          <div class="logo-text">
+            <strong>Trading</strong>
+            <span>Analysis</span>
           </div>
         </div>
 
-        <div class="topbar-actions">
-          <div class="mini-status">
-            <span class="live-dot"></span>
-            Market live
-          </div>
-          <button id="refreshButton" class="refresh-btn" type="button">Refresh data</button>
-        </div>
-      </header>
+        <nav class="sidebar-nav">
+          <a href="#dashboard" class="nav-item active">
+            <span class="nav-icon">📊</span> Dashboard
+          </a>
+          <a href="#watchlist" class="nav-item">
+            <span class="nav-icon">👁️</span> Watchlist
+          </a>
+          <a href="#scanner" class="nav-item">
+            <span class="nav-icon">🔍</span> Scanner
+          </a>
+          <a href="#analysis" class="nav-item">
+            <span class="nav-icon">📈</span> Analysis
+          </a>
+        </nav>
 
-      <section class="hero panel">
-        <div class="hero-copy">
-          <p class="eyebrow secondary">Market scan</p>
-          <h2>Actionable signals across trend, volatility, and catalysts.</h2>
-          <p>
-            A lightweight analytical dashboard built to evaluate multi-timeframe trend alignment,
-            fundamental quality, event momentum, implied volatility conditions, and gamma-blast setups.
-          </p>
-          <div class="hero-actions">
-            <a href="#watchlist" class="primary-btn">View watchlist</a>
-            <a href="#scanner" class="secondary-btn">Open scanner</a>
+        <div class="sidebar-divider"></div>
+
+        <div class="sidebar-status">
+          <div class="status-label">Market Status</div>
+          <div class="status-badge live">
+            <span class="live-indicator"></span> Live
           </div>
         </div>
+      </aside>
 
-        <div class="pulse-card">
-          <div class="pulse-label">Market pulse</div>
-          <div id="marketPulse" class="pulse-value">Loading…</div>
-          <div class="pulse-grid">
-            <div>
-              <span class="mini-label">Bias</span>
-              <strong id="biasValue">—</strong>
+      <main class="app-shell">
+        <header class="topbar">
+          <div class="topbar-left">
+            <p class="eyebrow">Professional Trading Platform</p>
+            <h1>Market Intelligence Dashboard</h1>
+          </div>
+
+          <div class="topbar-right">
+            <div class="market-time">
+              <span class="time-label">Last updated</span>
+              <span id="updateTime" class="time-value">—</span>
             </div>
-            <div>
-              <span class="mini-label">Top pick</span>
-              <strong id="topPickValue">—</strong>
+            <button id="refreshButton" class="refresh-btn" type="button">
+              <span>↻</span> Refresh
+            </button>
+          </div>
+        </header>
+
+        <section class="hero-dashboard">
+          <div class="hero-primary">
+            <div class="market-pulse-card">
+              <div class="pulse-header">
+                <h2>Market Pulse</h2>
+                <span class="pulse-badge"></span>
+              </div>
+              <div id="marketPulse" class="pulse-value">Loading…</div>
+              <div class="pulse-meta">
+                <div class="meta-item">
+                  <span class="meta-label">Bias</span>
+                  <strong id="biasValue">—</strong>
+                </div>
+                <div class="meta-item">
+                  <span class="meta-label">Signal Count</span>
+                  <strong id="signalCount">0</strong>
+                </div>
+                <div class="meta-item">
+                  <span class="meta-label">Top Pick</span>
+                  <strong id="topPickValue">—</strong>
+                </div>
+              </div>
+            </div>
+
+            <div class="perf-grid">
+              <div class="perf-card">
+                <div class="perf-label">Buy Signals</div>
+                <div id="buyCount" class="perf-value">0</div>
+                <div class="perf-change up">↑ Active</div>
+              </div>
+              <div class="perf-card">
+                <div class="perf-label">Watch List</div>
+                <div id="watchCount" class="perf-value">0</div>
+                <div class="perf-change neutral">→ Monitoring</div>
+              </div>
+              <div class="perf-card">
+                <div class="perf-label">Low IV</div>
+                <div id="lowIvCount" class="perf-value">0</div>
+                <div class="perf-change info">ⓘ Opportunity</div>
+              </div>
+              <div class="perf-card">
+                <div class="perf-label">Gamma Blast</div>
+                <div id="gammaCount" class="perf-value">0</div>
+                <div class="perf-change alert">⚠ High Risk</div>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
 
-      <section id="strategyGrid" class="strategy-grid" aria-label="Signal strategy metrics"></section>
-
-      <section id="summary" class="summary-grid" aria-live="polite"></section>
-
-      <div class="panel-grid">
-        <section id="scanner" class="panel">
-          <div class="panel-header">
-            <h2>Low-IV opportunities</h2>
-            <span class="panel-tag">Scanner</span>
+          <div class="hero-secondary">
+            <div class="analytics-card">
+              <div class="card-header">
+                <h3>Market Composition</h3>
+              </div>
+              <div class="composition-chart">
+                <div class="comp-bar">
+                  <div class="comp-segment buy" id="buyPercent"></div>
+                  <div class="comp-segment watch" id="watchPercent"></div>
+                  <div class="comp-segment sell" id="sellPercent"></div>
+                </div>
+              </div>
+              <div class="composition-legend">
+                <div class="legend-item">
+                  <span class="legend-box buy"></span>
+                  <span>BUY</span>
+                  <strong id="buyLabel">0</strong>
+                </div>
+                <div class="legend-item">
+                  <span class="legend-box watch"></span>
+                  <span>WATCH</span>
+                  <strong id="watchLabel">0</strong>
+                </div>
+                <div class="legend-item">
+                  <span class="legend-box sell"></span>
+                  <span>SELL</span>
+                  <strong id="sellLabel">0</strong>
+                </div>
+              </div>
+            </div>
           </div>
-          <div id="low-iv-list" class="chip-list" aria-live="polite"></div>
         </section>
 
-        <section class="panel">
-          <div class="panel-header">
-            <h2>Gamma blast watch</h2>
-            <span class="panel-tag">Volatility</span>
-          </div>
-          <div id="gamma-list" class="chip-list" aria-live="polite"></div>
+        <section class="key-metrics">
+          <h2 class="section-title">Key Metrics</h2>
+          <div class="metrics-grid" id="summary"></div>
         </section>
-      </div>
 
-      <section class="analytics-grid">
-        <div class="panel">
-          <div class="panel-header">
-            <h2>Signal engine</h2>
-            <span class="panel-tag">Model</span>
+        <section class="strategy-panels">
+          <div class="strategy-panel">
+            <div class="panel-header">
+              <h3>Signal Engine Weights</h3>
+              <span class="panel-badge">Model</span>
+            </div>
+            <div id="factorSet" class="factor-breakdown"></div>
           </div>
-          <div id="signalBreakdown" class="signal-breakdown"></div>
-        </div>
 
-        <div class="panel">
-          <div class="panel-header">
-            <h2>Opportunity ladder</h2>
-            <span class="panel-tag">Ranks</span>
+          <div class="strategy-panel">
+            <div class="panel-header">
+              <h3>Opportunity Ladder</h3>
+              <span class="panel-badge">Top 5</span>
+            </div>
+            <div id="opportunityLadder" class="ranked-list"></div>
           </div>
-          <div id="opportunityLadder" class="ladder"></div>
-        </div>
-      </section>
 
-      <section id="watchlist" class="panel full-width">
-        <div class="panel-header">
-          <h2>Watchlist</h2>
-          <span class="panel-tag">Signal model</span>
-        </div>
+          <div class="strategy-panel">
+            <div class="panel-header">
+              <h3>Signal Distribution</h3>
+              <span class="panel-badge">Stats</span>
+            </div>
+            <div id="signalBreakdown" class="signal-stats"></div>
+          </div>
+        </section>
 
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>Symbol</th>
-                <th>Asset</th>
-                <th>Price</th>
-                <th>Daily</th>
-                <th>Trend</th>
-                <th>Signal</th>
-                <th>Score</th>
-              </tr>
-            </thead>
-            <tbody id="watchlist-body"></tbody>
-          </table>
-        </div>
-      </section>
-    </main>
+        <section class="scanner-section">
+          <div class="scanner-row">
+            <div class="scanner-panel">
+              <div class="panel-header">
+                <h3>Low-IV Opportunities</h3>
+                <span class="panel-badge scanner">Scanner</span>
+              </div>
+              <div id="low-iv-list" class="opportunity-grid"></div>
+            </div>
+
+            <div class="scanner-panel">
+              <div class="panel-header">
+                <h3>Gamma Blast Watch</h3>
+                <span class="panel-badge volatile">Volatile</span>
+              </div>
+              <div id="gamma-list" class="opportunity-grid"></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="watchlist-section">
+          <div class="watchlist-header">
+            <h2>Signal Watchlist</h2>
+            <div class="watchlist-controls">
+              <button class="filter-btn active">All</button>
+              <button class="filter-btn">Buy</button>
+              <button class="filter-btn">Watch</button>
+              <button class="filter-btn">Sell</button>
+            </div>
+          </div>
+
+          <div class="table-container">
+            <table class="watchlist-table">
+              <thead>
+                <tr>
+                  <th>Symbol</th>
+                  <th>Asset Type</th>
+                  <th>Price</th>
+                  <th>Daily %</th>
+                  <th>Trend</th>
+                  <th>Fundamentals</th>
+                  <th>Signal</th>
+                  <th>Composite</th>
+                </tr>
+              </thead>
+              <tbody id="watchlist-body"></tbody>
+            </table>
+          </div>
+        </section>
+      </main>
+    </div>
 
     <script src="/static/app.js"></script>
   </body>
